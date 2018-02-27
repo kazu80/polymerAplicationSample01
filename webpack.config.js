@@ -1,4 +1,7 @@
 /* eslint-disable no-undef,comma-dangle,quotes,key-spacing */
+
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
 module.exports = {
     // モード値をproductionに設定すると最適化された状態で、
     // development に設定するとソースマップ有効でJSファイルが出力される
@@ -23,19 +26,10 @@ module.exports = {
             // Sassファイルの読み込みとコンパイル
             {
                 test: /\.scss/, // 対象となるファイルの拡張子
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            // ソースマップを有効にする
-                            sourceMap: true,
-                            // Sassの場合は２を指定
-                            importLoaders: 2
-                        }
-                    },
-                    'sass-loader'
-                ],
+                use: ExtractTextPlugin.extract({
+                                                   fallback: 'style-loader',
+                                                   use: ['css-loader', 'sass-loader']
+                                               })
             },
             {
                 // 対象となるファイルの拡張子
@@ -44,5 +38,8 @@ module.exports = {
                 loader: 'url-loader'
             }
         ]
-    }
+    },
+    plugins: [
+        new ExtractTextPlugin(`style.css`)
+    ]
 };
