@@ -19,6 +19,7 @@
     "test": "polymer test",
     "test:integration": "polymer build # test that psk builds without error with the CLI",
     "serve": "polymer serve --open",
-    "webpack": "npx webpack --watch"
+    "webpack": "npx webpack --watch",
+    "build": "npx webpack --display-error-details && polymer build"
   }
 }

@@ -6,12 +6,12 @@ module.exports = {
     // mode: "production",
 
     // メインとなるJavascriptファイル
-    entry: "./src/static/js/index.js",
+    entry: "./src/static/js/entry.js",
 
     // ファイル出力設定
     output: {
         // 出力ファイルのディレクトリ名
-        path: `${__dirname}/dist`,
+        path: `${__dirname}/src/static/js`,
 
         // 出力ファイル名
         filename: 'main.js'
