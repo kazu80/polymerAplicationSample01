@@ -20,11 +20,9 @@ module.exports = {
     module: {
         // Loaderの設定
         rules : [
-            // CSSファイルの読み込み
+            // Sassファイルの読み込みとコンパイル
             {
-                // 対象となるファイルの拡張子
-                test: /\.css/,
-                // ローダー名
+                test: /\.scss/, // 対象となるファイルの拡張子
                 use: [
                     'style-loader',
                     {
@@ -34,9 +32,12 @@ module.exports = {
                             url: false,
                             // ソースマップを有効にする
                             sourceMap: true,
+                            // Sassの場合は２を指定
+                            importLoaders: 2
                         }
-                    }
-                ]
+                    },
+                    'sass-loader'
+                ],
             }
         ]
     }
