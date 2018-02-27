@@ -28,8 +28,6 @@ module.exports = {
                     {
                         loader: 'css-loader',
                         options: {
-                            // オプションでCSS内のurl()メソッドの取り込みを禁止する
-                            url: false,
                             // ソースマップを有効にする
                             sourceMap: true,
                             // Sassの場合は２を指定
@@ -38,6 +36,12 @@ module.exports = {
                     },
                     'sass-loader'
                 ],
+            },
+            {
+                // 対象となるファイルの拡張子
+                test: /\.(gif|png|jpg|eot|wof|woff|ttf|svg)$/,
+                // 画像をBase64として取り込む
+                loader: 'url-loader'
             }
         ]
     }
