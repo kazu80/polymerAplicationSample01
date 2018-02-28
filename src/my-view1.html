@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="my-view1">
@@ -21,6 +22,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
+    <app-route
+            route="{{route}}"
+            pattern="/:user_id"
+            data="{{routeData}}"></app-route>
+
+    <button on-click="foo">foo</button>
+
     <div class="card">
       <div class="circle">1</div>
       <h1>View One</h1>
@@ -32,6 +40,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     class MyView1 extends Polymer.Element {
       static get is() { return 'my-view1'; }
+
+      static get properties() {
+          return {
+              route: Object,
+              routeData: Object,
+              bar: {
+                  type: String,
+                  value: 'xxx',
+              },
+          };
+      }
+
+        static get observers() {
+            return [
+                '_routeChanged(route.*)',
+                '_viewChanged(routeData.view)',
+            ];
+        }
+
+        _routeChanged(changeRecord) {
+          console.log(changeRecord);
+            if (changeRecord.path === 'path') {
+                console.log('Path changed!');
+            }
+        }
+
+        _viewChanged(view) {
+            // load data for view
+        }
+
+      constructor() {
+          super();
+      }
+
+      foo() {
+          this.set('route.path', '/view2');
+      }
+
+
     }
 
     window.customElements.define(MyView1.is, MyView1);
