@@ -20,14 +20,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         padding: 10px;
       }
+
+      button {
+        padding: 15px 40px;
+        background-color: #0a3142;
+        color: #fff;
+        font-size: 24px;
+      }
+
+      .wrapper {
+        width: 100%;
+        text-align: center;
+      }
     </style>
-
-    <app-route
-            route="{{route}}"
-            pattern="/:user_id"
-            data="{{routeData}}"></app-route>
-
-    <button on-click="foo">foo</button>
 
     <div class="card">
       <div class="circle">1</div>
@@ -35,52 +40,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
       <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
     </div>
+
+    <div class="wrapper">
+      <button on-click="toView2">to view2</button>
+    </div>
   </template>
 
   <script>
-    class MyView1 extends Polymer.Element {
-      static get is() { return 'my-view1'; }
+      class MyView1 extends Polymer.Element {
+          static get is () { return 'my-view1'; }
 
-      static get properties() {
-          return {
-              route: Object,
-              routeData: Object,
-              bar: {
-                  type: String,
-                  value: 'xxx',
-              },
-          };
+          static get properties () {
+              return {};
+          }
+
+          constructor () {
+              super ();
+          }
+
+          /**
+           * ページ遷移
+           * 親から渡されたroute（オブジェクト）のpathを変更すると、親に伝わり（2way-bind）ページ遷移が行われる
+           */
+          toView2 () {
+              this.set ('route.path', 'view2');
+          }
       }
 
-        static get observers() {
-            return [
-                '_routeChanged(route.*)',
-                '_viewChanged(routeData.view)',
-            ];
-        }
-
-        _routeChanged(changeRecord) {
-          console.log(changeRecord);
-            if (changeRecord.path === 'path') {
-                console.log('Path changed!');
-            }
-        }
-
-        _viewChanged(view) {
-            // load data for view
-        }
-
-      constructor() {
-          super();
-      }
-
-      foo() {
-          this.set('route.path', '/view2');
-      }
-
-
-    }
-
-    window.customElements.define(MyView1.is, MyView1);
+      window.customElements.define (MyView1.is, MyView1);
   </script>
 </dom-module>
