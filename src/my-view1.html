@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="redux-store.html">
 
 <dom-module id="my-view1">
   <template>
@@ -39,6 +40,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <h1>View One</h1>
       <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
       <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
+
+      <h2>Friends: [[friendCount]]</h2>
     </div>
 
     <div class="wrapper">
@@ -47,15 +50,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-      class MyView1 extends Polymer.Element {
+      /* eslint-disable space-before-function-paren,func-call-spacing,new-cap,no-undef,max-len */
+
+      class MyView1 extends ReduxBehavior(Polymer.Element) {
           static get is () { return 'my-view1'; }
 
           static get properties () {
-              return {};
+              return {
+                  friends: {
+                      type: Array,
+                      statePath: 'friends',
+                  },
+                  friendCount: {
+                      type: Number,
+                      computed: 'computeFriendCount(friends)',
+                  },
+              };
           }
 
           constructor () {
               super ();
+          }
+
+          computeFriendCount (friends) {
+              return friends.length;
           }
 
           /**
