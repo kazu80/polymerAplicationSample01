@@ -21,5 +21,8 @@
     "serve": "polymer serve --open",
     "webpack": "npx webpack --watch",
     "build": "npx webpack --display-error-details && polymer build"
+  },
+  "dependencies": {
+    "redux": "^3.7.2"
   }
 }
