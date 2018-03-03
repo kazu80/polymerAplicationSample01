@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="redux-store.html">
@@ -29,6 +30,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 24px;
       }
 
+      button.add {
+        padding: 5px 10px;
+      }
+
       .wrapper {
         width: 100%;
         text-align: center;
@@ -42,6 +47,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
 
       <h2>Friends: [[friendCount]]</h2>
+
+      <input id="field" type="text">
+      <button class="add" on-click="addFriend"> add friend</button>
+
+      <br>
+
+      <ul>
+        <template is="dom-repeat" items="[[friends]]" as="friend">
+          <li>[[friend]]</li>
+        </template>
+      </ul>
+
     </div>
 
     <div class="wrapper">
@@ -68,12 +85,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               };
           }
 
+          static get actions () {
+              return {
+                  add: (name) => {
+                      return {
+                          type: 'ADD_FRIEND',
+                          friend: name,
+                      };
+                  },
+              };
+          }
+
           constructor () {
               super ();
           }
 
           computeFriendCount (friends) {
               return friends.length;
+          }
+
+          addFriend () {
+              const field = this.$.field;
+              if (field.value) {
+                  this.dispatch('add', field.value);
+                  field.value = null;
+                  field.focus();
+              }
           }
 
           /**
